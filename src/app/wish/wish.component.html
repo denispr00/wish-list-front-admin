@@ -1,0 +1,54 @@
+<app-navbar></app-navbar>
+<br>
+
+<div class="container h-100">
+  <div class="row h-100 justify-content-center align-items-center">
+    <section class="main col-12" *ngIf="pagedItems?.length > 0">
+      <div class="input-group mb-3">
+          <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">+</span>
+          </div>
+          <input class="form-control"
+            [(ngModel)]="inputWish"
+            placeholder="Please enter your wish"
+            (keyup.enter)="add(newWish.value)"
+            aria-label="Username" aria-describedby="basic-addon1"
+            #newWish>
+          
+          <!-- <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1"> -->
+      </div>
+      <ul class="list-group list-unstyled">
+        <li *ngFor="let item of pagedItems">
+          <div class="view">
+            <!-- <input class="toggle" type="checkbox" (click)="completeWish(item)" [checked]="item.complete"> -->
+            <del *ngIf="item.complete" class="list-group-item list-group-item-action disabled"
+              (click)="uncompleteWish(item)">{{item.title}}</del>
+            <label *ngIf="!item.complete" class="list-group-item list-group-item-action"
+              (click)="completeWish(item)">{{item.title}}</label>
+            <!-- <button class="btn btn-primary" (click)="delete(item)">Remove</button> -->
+          </div>
+        </li>
+      </ul>
+      <!-- pager -->
+      <nav aria-label="...">
+        <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+            <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
+                <a class="page-link" (click)="setPage(1)">First</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item">
+                <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+            </li>
+            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item">
+                <a class="page-link" class="page-link"(click)="setPage(page)">{{page}}</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
+                <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item">
+                <a class="page-link" (click)="setPage(pager.totalPages)">Last</a>
+            </li>
+        </ul>
+      </nav>
+    </section>
+  </div>
+</div>
